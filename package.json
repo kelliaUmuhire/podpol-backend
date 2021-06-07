@@ -18,6 +18,9 @@
   "homepage": "https://github.com/kelliaUmuhire/podpol-backend#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.12.13"
+    "joi": "^17.4.0",
+    "joi-objectid": "^3.0.1",
+    "mongoose": "^5.12.13",
+    "nodemon": "^2.0.7"
   }
 }
