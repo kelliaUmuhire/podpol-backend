@@ -1,4 +1,6 @@
 const db = require("../models");
+const dotenv = require("dotenv");
+dotenv.config();
 
 //connect to MongoDB server
 db.mongoose
