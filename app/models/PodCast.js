@@ -2,14 +2,32 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-const User = mongoose.model(
-  "User",
+const PodCast = mongoose.model(
+  "PodCast",
 
   new mongoose.Schema({
-    fullName: String,
-    userName: String,
-    email: String,
-    password: String,
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    categoryId: {
+      type: mongoose.Types.ObjectId,
+      ref: "categories",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
+    p_picture: String,
+    status: String,
+    description: String,
+    tags: [],
+    dos: {
+      type: Date,
+      default: Date.now,
+    },
   })
 );
 
