@@ -2,27 +2,45 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-const User = mongoose.model(
-  "User",
+const Profile = mongoose.model(
+  "Profile",
 
   new mongoose.Schema({
-    fullName: String,
-    userName: String,
-    email: String,
-    password: String,
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+    location: String,
+    social: {
+      youtube: String,
+      twitter: String,
+      facebook: String,
+      linkedin: String,
+      instagram: String,
+    },
+    profileImg: String,
+    dob: Date,
   })
 );
 
-const validateUser = (user) => {
+const validateProfile = (profile) => {
   const joiSchema = Joi.object({
-    fullName: Joi.string().min(3).max(50).required(),
-    email: Joi.string().required(),
-    userName: Joi.string().required(),
-    password: Joi.string().min(6).max(40).required(),
+    userId: Joi.objectId().required(),
+    location: Joi.string(),
+    social: Joi.object({
+      youtube: Joi.string(),
+      twitter: Joi.string(),
+      facebook: Joi.string(),
+      linkedin: Joi.string(),
+      instagram: Joi.string(),
+    }),
+    profileImg: Joi.string(),
+    dob: Joi.date(),
   });
 
-  return joiSchema.validate(user);
+  return joiSchema.validate(profile);
 };
 
-module.exports.User = User;
-module.exports.validateUser = validateUser;
+module.exports.Profile = Profile;
+module.exports.validateProfile = validateProfile;

@@ -21,7 +21,7 @@ const validateUser = (user) => {
     password: Joi.string().min(6).max(40).required(),
   });
 
-  return joiSchema.validate(user);
+  return joiSchema.validate(users);
 };
 
 module.exports.User = User;
