@@ -1,6 +1,4 @@
-// const config = require("../config/auth.config");
 const db = require("../models");
-const { User } = require("../models/User");
 const { Profile, validateProfile } = db.profile;
 
 const ProfileController = {
@@ -9,7 +7,7 @@ const ProfileController = {
     if (error) return res.status(400).send(error);
 
     let profileFields = {};
-    profileFields.userId = req.body.userId;
+    profileFields.user = req.body.user;
 
     if (req.body.location) profileFields.social.location = req.body.location;
     if (req.body.profileImg)
@@ -23,7 +21,7 @@ const ProfileController = {
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
     if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
-    Profile.findOne({ userId: req.body.userId }).then((profile) => {
+    Profile.findOne({ user: req.body.userId }).then((profile) => {
       if (profile) {
         //update profile
 
@@ -32,7 +30,7 @@ const ProfileController = {
           { $set: profileFields },
           { new: true }
         )
-          .then((updatedProfile) => {
+          .then(() => {
             res.status(200).send({ success: true, message: "Profile Updated" });
           })
           .catch((err) =>
@@ -61,8 +59,8 @@ const ProfileController = {
   },
 
   async getProfile(req, res) {
-    Profile.findOne({ userId: req.body._id })
-      .populate("userId", "-__v")
+    Profile.findOne({ user: req.body._id })
+      .populate("user", "-__v")
       .exec((err, profile) => {
         if (err) {
           res.status(500).send({ message: err });
@@ -82,7 +80,7 @@ const ProfileController = {
   },
 
   async removeProfile(req, res) {
-    Profile.findOneAndDelete({ userId: req.params.id })
+    Profile.findOneAndDelete({ user: req.params.id })
       .then((prof) => res.send({ success: true, message: "Profile Deleted" }))
       .catch(res.status(400).send({ success: false, message: err }));
   },

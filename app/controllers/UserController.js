@@ -82,6 +82,8 @@ const UserController = {
       ProfileController.removeProfile(req, res);
     });
   },
+
+  async updateUser(req, res) {},
 };
 
 module.exports = UserController;

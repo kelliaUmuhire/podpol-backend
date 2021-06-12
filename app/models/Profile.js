@@ -6,7 +6,7 @@ const Profile = mongoose.model(
   "profiles",
 
   new mongoose.Schema({
-    userId: {
+    user: {
       type: mongoose.Types.ObjectId,
       ref: "users",
       required: true,
@@ -26,7 +26,7 @@ const Profile = mongoose.model(
 
 const validateProfile = (profile) => {
   const joiSchema = Joi.object({
-    userId: Joi.objectId().required(),
+    user: Joi.objectId().required(),
     location: Joi.string(),
     social: Joi.object({
       youtube: Joi.string(),
