@@ -28,6 +28,7 @@ const PodCast = mongoose.model(
       type: Date,
       default: Date.now,
     },
+    episodes: {},
   })
 );
 
