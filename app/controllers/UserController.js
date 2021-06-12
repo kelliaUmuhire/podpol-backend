@@ -83,7 +83,11 @@ const UserController = {
     });
   },
 
-  async updateUser(req, res) {},
+  async updateUser(req, res) {
+    // const { error } = validateUser(req.body);
+    // if (error) return res.status(400).send(error);
+    // User.findByIdAndUpdate(req.body.userId, {$set: })
+  },
 };
 
 module.exports = UserController;
