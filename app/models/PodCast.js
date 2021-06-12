@@ -3,7 +3,7 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 const PodCast = mongoose.model(
-  "PodCast",
+  "podcast",
 
   new mongoose.Schema({
     userId: {

@@ -3,7 +3,7 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 const User = mongoose.model(
-  "User",
+  "users",
 
   new mongoose.Schema({
     fullName: String,
@@ -21,7 +21,7 @@ const validateUser = (user) => {
     password: Joi.string().min(6).max(40).required(),
   });
 
-  return joiSchema.validate(users);
+  return joiSchema.validate(user);
 };
 
 module.exports.User = User;

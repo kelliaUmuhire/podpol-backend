@@ -3,7 +3,7 @@ const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
 const Profile = mongoose.model(
-  "Profile",
+  "profiles",
 
   new mongoose.Schema({
     userId: {
