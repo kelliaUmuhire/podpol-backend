@@ -1,8 +1,11 @@
 // const config = require("../config/auth.config");
 const db = require("../models");
 const { User, validateUser } = db.user;
+const { Profile, validateProfile } = db.profile;
+
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const ProfileController = require("./ProfileController");
 
 const UserController = {
   async signUp(req, res) {
@@ -23,10 +26,13 @@ const UserController = {
         });
         await user
           .save()
-          .then(() => {
-            return res
-              .status(201)
-              .send({ message: "User was registered successfully!" });
+          .then((newUser) => {
+            req.body = {};
+            req.body.userId = String(newUser._id);
+            ProfileController.newProfile(req, res);
+            // return re
+            //   .status(201)
+            //   .send({ message: "User was registered successfully!" });
           })
           .catch((err) => {
             return res.status(500).send({ message: err });
@@ -76,6 +82,8 @@ const UserController = {
         return;
       });
   },
+
+  async removeUser() {},
 };
 
 module.exports = UserController;

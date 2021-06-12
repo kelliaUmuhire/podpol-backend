@@ -44,7 +44,7 @@ const ProfileController = {
           .save()
           .then((newProfile) =>
             res
-              .status(200)
+              .status(201)
               .send({ success: true, message: "Successfully created" })
           )
           .catch((err) =>
