@@ -54,10 +54,25 @@ const ProfileController = {
     });
   },
 
-  async getProfile(req, res) {
+  async getById(req, res) {
     Profile.findById(req.params.id)
       .then((profile) => res.send(profile))
       .catch(res.status(400).send({ success: false, message: err }));
+  },
+
+  async getProfile(req, res) {
+    Profile.findOne({ userId: req.body._id })
+      .populate("userId", "-__v")
+      .exec((err, profile) => {
+        if (err) {
+          res.status(500).send({ message: err });
+          return;
+        }
+        res.status(200).send({
+          profile,
+          accessToken: req.body.token,
+        });
+      });
   },
 
   async getAll(req, res) {
@@ -67,7 +82,7 @@ const ProfileController = {
   },
 
   async removeProfile(req, res) {
-    Profile.findByIdAndDelete(req.params.id)
+    Profile.findOneAndDelete({ userId: req.params.id })
       .then((prof) => res.send({ success: true, message: "Profile Deleted" }))
       .catch(res.status(400).send({ success: false, message: err }));
   },

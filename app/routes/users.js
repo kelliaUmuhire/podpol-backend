@@ -8,5 +8,6 @@ const router = express.Router();
 
 router.post("/signup", UserController.signUp);
 router.post("/signin", UserController.signIn);
+router.delete("/:id", UserController.removeUser);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.post("/", ProfileController.newProfile);
 router.get("/", ProfileController.getAll);
-router.get("/:id", ProfileController.getProfile);
+router.get("/:id", ProfileController.getById);
 router.delete("/:id", ProfileController.removeProfile);
 
 module.exports = router;

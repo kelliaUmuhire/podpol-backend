@@ -65,17 +65,11 @@ const UserController = {
         var token = jwt.sign({ id: user.id }, process.env.SECRET, {
           expiresIn: 86400, // 24 hours
         });
-        console.log(token);
 
-        //get profile
+        req.body._id = user._id;
+        req.body.toke = token;
 
-        res.status(200).send({
-          id: user._id,
-          fullName: user.fullName,
-          userName: user.userName,
-          email: user.email,
-          accessToken: token,
-        });
+        ProfileController.getProfile(req, res);
       })
       .catch((err) => {
         res.status(500).send({ message: err });
@@ -83,7 +77,11 @@ const UserController = {
       });
   },
 
-  async removeUser() {},
+  async removeUser(req, res) {
+    User.findByIdAndDelete(req.params.id).then(() => {
+      ProfileController.removeProfile(req, res);
+    });
+  },
 };
 
 module.exports = UserController;
