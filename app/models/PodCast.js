@@ -23,25 +23,45 @@ const PodCast = mongoose.model(
     p_picture: String,
     status: String,
     description: String,
-    tags: [],
-    dos: {
+    tags: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "tags",
+      },
+    ],
+    s_date: {
       type: Date,
       default: Date.now,
     },
-    episodes: {},
+    episodes: [
+      {
+        name: String,
+        description: String,
+        location: String,
+        date: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   })
 );
 
-const validateUser = (user) => {
+const validatePodcast = (podcast) => {
   const joiSchema = Joi.object({
-    fullName: Joi.string().min(3).max(50).required(),
-    email: Joi.string().required(),
-    userName: Joi.string().required(),
-    password: Joi.string().min(6).max(40).required(),
+    userId: Joi.objectId().required(),
+    categoryId: Joi.objectId().required(),
+    name: Joi.string().required(),
+    p_picture: Joi.string(),
+    status: Joi.string(),
+    description: Joi.string(),
+    s_date: Joi.date(),
+    tags: Joi.array(),
+    episodes: Joi.array(),
   });
 
-  return joiSchema.validate(users);
+  return joiSchema.validate(podcast);
 };
 
-module.exports.User = User;
-module.exports.validateUser = validateUser;
+module.exports.PodCast = PodCast;
+module.exports.validatePodcast = validatePodcast;
