@@ -17,6 +17,9 @@ router.get("/category/:catId", PodcastController.getByCategory);
 //get by tag
 router.get("/tag/:name", PodcastController.getByTag);
 
+//search
+router.get("/search/:term", PodcastController.search);
+
 // //update podcast
 
 // //update podcast episode

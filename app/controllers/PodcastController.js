@@ -112,6 +112,20 @@ const UserController = {
       .then(() => res.send({ success: true, message: "Podcast Deleted" }))
       .catch((err) => res.status(400).send({ success: false, message: err }));
   },
+  async search(req, res) {
+    PodCast.find({ name: { $regex: ".*" + req.params.term + ".*" } })
+      .populate("category", "-__v")
+      .populate("tags", "-__v")
+      .exec((err, podcasts) => {
+        if (err) {
+          res.status(500).send({ success: false, message: err });
+          return;
+        }
+        res.status(200).send({
+          podcasts,
+        });
+      });
+  },
 };
 
 module.exports = UserController;
