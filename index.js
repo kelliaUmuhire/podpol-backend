@@ -6,6 +6,9 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const users = require("./app/routes/users");
+const podcast = require("./app/routes/podcast");
+const tag = require("./app/routes/tag");
+const category = require("./app/routes/category");
 
 require("./app/config/db");
 app.use(cors());
@@ -15,6 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //routes
 app.use("/api/users", users);
+app.use("/api/podcast", podcast);
+app.use("/api/tag", tag);
+app.use("/api/category", category);
 
 app.use(express.json({ extended: false }));
 const port = process.env.PORT || 3050;

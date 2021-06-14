@@ -81,7 +81,7 @@ const ProfileController = {
 
   async removeProfile(req, res) {
     Profile.findOneAndDelete({ user: req.params.id })
-      .then((prof) => res.send({ success: true, message: "Profile Deleted" }))
+      .then(() => res.send({ success: true, message: "Profile Deleted" }))
       .catch(res.status(400).send({ success: false, message: err }));
   },
 };

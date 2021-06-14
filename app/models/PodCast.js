@@ -11,7 +11,7 @@ const PodCast = mongoose.model(
       ref: "users",
       required: true,
     },
-    categoryId: {
+    category: {
       type: mongoose.Types.ObjectId,
       ref: "categories",
       required: true,
@@ -50,7 +50,7 @@ const PodCast = mongoose.model(
 const validatePodcast = (podcast) => {
   const joiSchema = Joi.object({
     userId: Joi.objectId().required(),
-    categoryId: Joi.objectId().required(),
+    category: Joi.objectId().required(),
     name: Joi.string().required(),
     p_picture: Joi.string(),
     status: Joi.string(),
