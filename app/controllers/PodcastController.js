@@ -1,8 +1,9 @@
 // const config = require("../config/auth.config");
 const db = require("../models");
+const { Followers } = require("../models/Followers");
 const { PodCast, validatePodcast } = db.podcast;
 
-const UserController = {
+const PodcastController = {
   async newPodcast(req, res) {
     const { error } = validatePodcast(req.body);
     if (error) return res.status(400).send(error);
@@ -126,6 +127,20 @@ const UserController = {
         });
       });
   },
+  async trending(req, res) {
+    Followers.aggregate([
+      {
+        $group: {
+          _id: "$podcastId",
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { count: -1 } },
+      { $limit: 50 },
+    ])
+      .then((docs) => res.send(docs))
+      .catch((err) => res.status(500).send({ success: false, message: err }));
+  },
 };
 
-module.exports = UserController;
+module.exports = PodcastController;

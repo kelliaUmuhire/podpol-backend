@@ -20,6 +20,9 @@ router.get("/tag/:name", PodcastController.getByTag);
 //search
 router.get("/search/:term", PodcastController.search);
 
+//trending podcasts
+router.get("/trending", PodcastController.trending);
+
 // //update podcast
 
 // //update podcast episode
