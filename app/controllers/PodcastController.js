@@ -128,17 +128,15 @@ const PodcastController = {
       });
   },
   async trending(req, res) {
-    Followers.aggregate([
-      {
-        $group: {
-          _id: "$podcastId",
-          count: { $sum: 1 },
-        },
-      },
-      { $sort: { count: -1 } },
-      { $limit: 50 },
-    ])
-      .then((docs) => res.send(docs))
+    Followers.aggregate([{ $sortByCount: "$podcastId" }, { $limit: 20 }])
+      .then(async (docs) => {
+        let podcasts = [];
+        for (let i = 0; i < docs.length; i++) {
+          let podcast = await PodCast.findById(docs[i]._id);
+          podcasts.push({ ...podcast._doc });
+        }
+        res.status(200).send({ podcasts });
+      })
       .catch((err) => res.status(500).send({ success: false, message: err }));
   },
 };

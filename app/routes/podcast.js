@@ -9,7 +9,7 @@ router.post("/", PodcastController.newPodcast);
 router.get("/", PodcastController.getAll);
 
 //get by id
-router.get("/:id", PodcastController.getById);
+router.get("/byid/:id", PodcastController.getById);
 
 //get by category
 router.get("/category/:catId", PodcastController.getByCategory);
