@@ -11,7 +11,10 @@ router.get("/", CategoryController.getAll);
 //update category
 
 //get by id
-router.get("/:id", CategoryController.getById);
+router.get("/byid/:id", CategoryController.getById);
+
+//get hot genres(categories)
+router.get("/trending", CategoryController.trending);
 
 //delete
 router.delete("/:id", CategoryController.removeCategory);

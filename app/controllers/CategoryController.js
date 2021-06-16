@@ -1,5 +1,6 @@
 // const config = require("../config/auth.config");
 const db = require("../models");
+const { PodCast } = require("../models/PodCast");
 const { Category } = db.category;
 
 const CategoryController = {
@@ -34,6 +35,18 @@ const CategoryController = {
     Category.findById(req.params.id)
       .then((category) => res.send({ category }))
       .catch((err) => res.status(400).send({ success: false, message: err }));
+  },
+  async trending(req, res) {
+    PodCast.aggregate([{ $sortByCount: "$category" }, { $limit: 10 }])
+      .then(async (docs) => {
+        let categories = [];
+        for (let i = 0; i < docs.length; i++) {
+          let category = await Category.findById(docs[i]._id).select("-__v");
+          categories.push({ ...category._doc });
+        }
+        res.status(200).send({ categories });
+      })
+      .catch((err) => res.status(500).send({ success: false, message: err }));
   },
   async removeCategory(req, res) {
     Category.findByIdAndDelete(req.params.id)
